@@ -9,8 +9,6 @@ call plug#end()
 
 nmap <F5> :!python %
 inoremap jj <Esc>
-set backupdir=~/.vim/backup
-set directory=~/.vim/backup
 set number
 autocmd BufWrite *.{h,py,cpp} set fenc=utf-8
 if has('win32')
