@@ -18,3 +18,7 @@ elseif system("uname")=="Darwin\n"
 elseif system("uname")=="Linux\n"
     "unix"
 endif
+set tabstop=4
+set shiftwidth=4
+set smartindent
+set list
