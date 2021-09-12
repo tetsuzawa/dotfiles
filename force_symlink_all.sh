@@ -2,6 +2,6 @@
 
 cd ./HOME || exit
 for TARGET in $(find . -type f); do
-  echo $(realpath $TARGET)
-  ln -sf $(realpath $TARGET) $(realpath $HOME/$TARGET)
+  echo ${HOME}/${TARGET#./}
+  ln -sf $(realpath ${TARGET}) ${HOME}/${TARGET#./}
 done
