@@ -1,15 +1,29 @@
 call plug#begin()
 Plug 'tpope/vim-sensible'
-Plug 'davidhalter/jedi-vim'
 Plug 'Townk/vim-autoclose'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-fugitive'
+Plug 'vim/killersheep'
+
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 
 call plug#end()
 
 nmap <F5> :!python %
 inoremap jj <Esc>
-set number
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up>   gk
+
 autocmd BufWrite *.{h,py,cpp} set fenc=utf-8
 if has('win32')
     "Windows"
@@ -18,7 +32,9 @@ elseif system("uname")=="Darwin\n"
 elseif system("uname")=="Linux\n"
     "unix"
 endif
+set expandtab
 set tabstop=4
 set shiftwidth=4
 set smartindent
 set list
+set rtp+=/usr/local/opt/fzf
