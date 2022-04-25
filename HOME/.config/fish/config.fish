@@ -10,7 +10,7 @@ alias ll="ls -al"
 alias mv="mv -iv"
 alias rm="rm -iv"
 alias cat=bat
-# alias jq=gojq
+alias jq=gojq
 #
 # set PATH $HOME/local/bin $HOME/go/bin $PATH
 # set GOPATH $HOME/go
@@ -32,5 +32,7 @@ set LNAG ja_JP.UTF-8
 
 # The next line enables shell command completion for gcloud.
 # bass source '$HOME/google-cloud-sdk/completion.bash.inc'
+
+export GPG_TTY=(tty)
 
 source $HOME/google-cloud-sdk/path.fish.inc

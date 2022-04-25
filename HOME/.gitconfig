@@ -17,6 +17,7 @@
 [user]
 	name = Tetsu Takizawa
 	email = tetsu.takizawa5@gmail.com
+	signinkey = E1817E4026D9D7AC
 [merge]
 	ff = false
 [pull]
@@ -34,8 +35,14 @@
 	allowed = AKIAIOSFODNN7EXAMPLE
 	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 [init]
-	templatedir = ~/.git-templates/git-secrets
+    #templatedir = ~/.git-templates/git-secrets
 	defaultBranch = main
 [push]
 	default = current
-
+[credential]
+        helper = !aws --profile zucks-affiliate --region us-east-1 codecommit credential-helper $@
+        UseHttpPath = true
+[commit]
+	gpgsign = true
+[core]
+	editor = vim -c \"set fenc=utf-8\"
