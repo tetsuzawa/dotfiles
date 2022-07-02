@@ -12,11 +12,13 @@ alias rm="rm -iv"
 alias cat=bat
 alias jq=gojq
 #
-# set PATH $HOME/local/bin $HOME/go/bin $PATH
-# set GOPATH $HOME/go
+set PATH $HOME/local/bin $HOME/go/bin $PATH
+set GOPATH $HOME/go
 #
 # set PATH $HOME/.cargo/bin $PATH
 # set PATH $PATH $HOME/.symfony/bin
+
+# set PATH $HOME/.cargo/bin $PATH
 
 eval (gh completion -s fish| source)
 
@@ -36,3 +38,6 @@ set LNAG ja_JP.UTF-8
 export GPG_TTY=(tty)
 
 source $HOME/google-cloud-sdk/path.fish.inc
+
+
+
