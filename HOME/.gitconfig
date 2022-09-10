@@ -13,7 +13,13 @@
 	diffst = diff --staged
 	# add を確認
 	add = add -p
-	empty = commit -m "empty" --allow-empty
+	empty = commit --allow-empty -m "empty"
+	l = graph
+	delete-merged-branch = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|main'|xargs git branch -d; git fetch --prune; };f"
+	fetchmerge = "!f () { git fetch; git rev-parse --abbrev-ref HEAD | xargs -I{} git merge origin/{}; };f"
+	branchdate = "for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)'"
+
+
 
 [user]
 	name = Tetsu Takizawa
@@ -47,5 +53,19 @@
 	gpgsign = true
 [core]
 	editor = vim -c \"set fenc=utf-8\"
+	filemode = false
+    #pager = delta
 [ghq]
 	root = ~/repo
+[color]
+	ui = auto
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+	navigate = true    # use n and N to move between diff sections
+	light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+	line-numbers = true
+[merge]
+	conflictstyle = diff3
+[diff]
+	colorMoved = default
