@@ -13,6 +13,7 @@
 	diffst = diff --staged
 	# add を確認
 	add = add -p
+	empty = commit -m "empty" --allow-empty
 
 [user]
 	name = Tetsu Takizawa
