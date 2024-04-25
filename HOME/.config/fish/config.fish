@@ -14,7 +14,7 @@ end
 
 alias cd..="cd .."
 # alias rm="rmtrash"
-alias ls=exa
+alias ls=eza
 alias l="ls"
 alias la="ls -a"
 alias ll="ls -al"
