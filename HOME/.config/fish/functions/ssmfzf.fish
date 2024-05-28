@@ -1,7 +1,8 @@
 function ssmfzf
-  set PROFILE $argv[1]
-  if test -z "$PROFILE"
-    set PROFILE "carta-thanos"
+  set -x PROFILE "$AWS_PROFILE"
+  if not set -q PROFILE
+      echo run 'export AWS_PROFILE=xxxxx'
+      return 1
   end
   echo "profile: $PROFILE"
   set -l TARGET (aws --profile $PROFILE --region ap-northeast-1 ec2 describe-instances | jq -c '.Reservations[].Instances[] | select(.State.Name == "running")  | {InstanceId: .InstanceId} + (.Tags | map({(.Key): .Value}) | add)' | fzf --exit-0 | jq -r ".InstanceId")

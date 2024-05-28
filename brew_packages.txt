@@ -1,0 +1,10 @@
+bat
+eza
+fish
+fzf
+gh
+git
+git-delta
+gnupg
+jq
+starship

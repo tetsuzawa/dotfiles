@@ -70,8 +70,14 @@ set PATH "$HOME/.poetry/bin:$PATH"
 
 # jetbrains
 set PATH "$HOME/Library/Application Support/JetBrains/Toolbox/scripts:$PATH"
+set PATH "/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
+
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 export GOPRIVATE=github.com/Levetty
 starship init fish | source
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+set --export --prepend PATH "{HOME}/.rd/bin"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
