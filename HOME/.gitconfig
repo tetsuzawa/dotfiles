@@ -11,20 +11,23 @@
 	difff = diff --word-diff
 	# ステージングしたコードを確認
 	diffst = diff --staged
+	diffpr = diff main...HEAD
 	# add を確認
 	add = add -p
 	empty = commit --allow-empty -m "empty"
 	l = graph
 	delete-merged-branch = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|main'|xargs git branch -d; git fetch --prune; };f"
 	fetchmerge = "!f () { git fetch; git rev-parse --abbrev-ref HEAD | xargs -I{} git merge origin/{}; };f"
-	branchdate = "for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)'"
+	branchdate = "!f () { git for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)' | tail -n 8; };f"
+	chz = !git branch --sort=-authordate | fzf | xargs git checkout
+	hardpull = !git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
 
 
 
 [user]
 	name = Tetsu Takizawa
 	email = tetsu.takizawa5@gmail.com
-	signinkey = E1817E4026D9D7AC
+	signingkey = B4A55FE34F95ABC1B12D8E43A58AB3F4102ED7CD
 [merge]
 	ff = false
 [pull]
@@ -34,6 +37,10 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[filter "ignoregomodreplace"]
+	smudge = cat
+    #clean = sed -E 's/^(\\t?)(replace)?( *)(github\\.com\\/(l|L)evetty[-a-zA-Z0-9\\/\\.\\t ]+=>.+)/\\/\\/\\1\\2\\3\\4/g'
+	clean = sed -E 's/^(replace)?( *)(github\\.com\\/(l|L)evetty[-a-zA-Z0-9\\/\\.\\t ]+=>.+)/\\/\\/\\1\\2\\3/g'
 [secrets]
 	providers = git secrets --aws-provider
 	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
@@ -54,13 +61,12 @@
 [core]
 	editor = vim -c \"set fenc=utf-8\"
 	filemode = false
-    #pager = delta
 [ghq]
 	root = ~/repo
 [color]
 	ui = auto
-[interactive]
-    diffFilter = delta --color-only
+#[interactive]
+#    diffFilter = delta --color-only
 [delta]
 	navigate = true    # use n and N to move between diff sections
 	light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
@@ -69,3 +75,9 @@
 	conflictstyle = diff3
 [diff]
 	colorMoved = default
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
