@@ -1,0 +1,110 @@
+name: Claude Auto PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  claude-auto-review:
+    if: |
+      github.actor != 'dependabot[bot]' &&
+      github.actor != 'github-actions[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - uses: anthropics/claude-code-action@ea36d6abdedc17fc2a671b36060770b208a6f8f1 # v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: |
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr review:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr edit:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(jq:*),Bash(shellcheck:*),Bash(cat:*),Bash(ls:*)"
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            ## ステップ1: 過去のレビュー履歴を取得
+
+            レビュー前に、一貫性を保つため過去のレビュー履歴を必ず確認してください:
+
+            ```bash
+            gh pr view ${{ github.event.pull_request.number }} --json reviews,comments --jq '
+              "## 過去のレビュー:\n" +
+              (.reviews | map("- " + .author.login + " (" + .state + "): " + (.body // "(本文なし)")) | join("\n")) +
+              "\n\n## PRコメント:\n" +
+              (.comments | map("- " + .author.login + ": " + .body) | join("\n"))
+            '
+            ```
+
+            ## ステップ2: レビューガイドライン
+
+            ### レビュー一貫性ルール（重要）
+
+            1. **過去のフィードバックと矛盾しない**: 前回のレビューで要求された変更が実装されている場合、明確なバグやセキュリティ問題でない限りその実装を批判しないこと。
+            2. **対応済みフィードバックを認める**: 前回のレビューコメントに対応した変更をレビューする際は、新たな懸念を提起するのではなく、対応されたことを認めること。
+            3. **ブレないこと**: 以前承認したパターンやアプローチは、具体的な技術的理由がない限り維持すること。
+
+            ### dotfiles 固有のレビュー観点
+
+            このリポジトリは個人の dotfiles（~/.claude 設定含む）を管理しています。
+            以下の観点でレビューしてください:
+
+            #### セキュリティ（最重要）
+            - API キー、トークン、パスワード等の秘密情報が含まれていないか
+            - credentials.json 等の認証ファイルが混入していないか
+            - settings.json 内に秘密情報が含まれていないか
+
+            #### 構文チェック
+            - JSON ファイルの構文が正しいか（jq でバリデーション）
+            - シェルスクリプトの構文が正しいか（shellcheck でバリデーション）
+
+            #### 設定の一貫性
+            - CLAUDE.md の指示が矛盾していないか
+            - agents/ 配下の定義が重複・矛盾していないか
+            - hooks の設定が意図通りか
+
+            すべてのレビューは日本語で行ってください。
+            具体的なコード問題は `mcp__github_inline_comment__create_inline_comment` でインラインコメントとして指摘してください。
+
+            ## ステップ3: レビュー判定
+
+            レビュー後、以下のケースから必ず1つを選んでGitHub PRレビューを提出してください:
+
+            ### ケース1: 承認
+
+            PRに問題がない場合:
+
+            ```bash
+            gh pr review ${{ github.event.pull_request.number }} --approve \
+              --body "<良かった点を含むレビュー本文>"
+            ```
+
+            ### ケース2: 変更要求
+
+            秘密情報の混入やセキュリティ問題がある場合:
+
+            ```bash
+            gh pr review ${{ github.event.pull_request.number }} --request-changes \
+              --body "<修正が必要な点とその理由>"
+            ```
+
+      - name: Auto-merge if approved
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REVIEW_STATE=$(gh pr view ${{ github.event.pull_request.number }} --json reviews --jq '[.reviews[] | select(.author.login != "github-actions[bot]")] | last | .state // empty')
+          if [ "$REVIEW_STATE" = "APPROVED" ]; then
+            gh pr merge ${{ github.event.pull_request.number }} --auto --squash
+          fi
