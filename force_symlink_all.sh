@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd ./HOME || exit
-for TARGET in $(find . -type f); do
-  echo ${HOME}/${TARGET#./}
-  ln -sf $(realpath ${TARGET}) ${HOME}/${TARGET#./}
+find . -type f | while IFS= read -r TARGET; do
+  echo "${HOME}/${TARGET#./}"
+  ln -sf "$(realpath "${TARGET}")" "${HOME}/${TARGET#./}"
 done
