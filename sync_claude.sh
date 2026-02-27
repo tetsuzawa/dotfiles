@@ -16,9 +16,6 @@ fi
 # ホワイトリスト方式で管理対象ファイルを定義
 MANAGED_FILES=(
   "CLAUDE.md"
-  "PRINCIPLES.md"
-  "RULES.md"
-  "FLAGS.md"
   "settings.json"
   "hooks/hook_pre_commands.sh"
   "hooks/hook_stop_words.sh"
@@ -52,73 +49,6 @@ sync_files() {
       fi
     done
   fi
-
-  # agents/*.md
-  if [ -d "$CLAUDE_DIR/agents" ]; then
-    mkdir -p "$DEST_DIR/agents"
-    for src in "$CLAUDE_DIR"/agents/*.md; do
-      [ -f "$src" ] || continue
-      local name
-      name="$(basename "$src")"
-      if ! diff -q "$src" "$DEST_DIR/agents/$name" >/dev/null 2>&1; then
-        cp "$src" "$DEST_DIR/agents/$name"
-        changed=true
-      fi
-    done
-  fi
-
-  # MCP_*.md
-  for src in "$CLAUDE_DIR"/MCP_*.md; do
-    [ -f "$src" ] || continue
-    local name
-    name="$(basename "$src")"
-    if ! diff -q "$src" "$DEST_DIR/$name" >/dev/null 2>&1; then
-      cp "$src" "$DEST_DIR/$name"
-      changed=true
-    fi
-  done
-
-  # MODE_*.md
-  for src in "$CLAUDE_DIR"/MODE_*.md; do
-    [ -f "$src" ] || continue
-    local name
-    name="$(basename "$src")"
-    if ! diff -q "$src" "$DEST_DIR/$name" >/dev/null 2>&1; then
-      cp "$src" "$DEST_DIR/$name"
-      changed=true
-    fi
-  done
-
-  # dotfiles 側にあるが ~/.claude 側から消えたファイルを削除
-  for dst in "$DEST_DIR"/agents/*.md; do
-    [ -f "$dst" ] || continue
-    local name
-    name="$(basename "$dst")"
-    if [ ! -f "$CLAUDE_DIR/agents/$name" ]; then
-      rm "$dst"
-      changed=true
-    fi
-  done
-
-  for dst in "$DEST_DIR"/MCP_*.md; do
-    [ -f "$dst" ] || continue
-    local name
-    name="$(basename "$dst")"
-    if [ ! -f "$CLAUDE_DIR/$name" ]; then
-      rm "$dst"
-      changed=true
-    fi
-  done
-
-  for dst in "$DEST_DIR"/MODE_*.md; do
-    [ -f "$dst" ] || continue
-    local name
-    name="$(basename "$dst")"
-    if [ ! -f "$CLAUDE_DIR/$name" ]; then
-      rm "$dst"
-      changed=true
-    fi
-  done
 
   echo "$changed"
 }
