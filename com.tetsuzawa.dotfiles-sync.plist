@@ -10,7 +10,7 @@
     <string>sync_claude.sh</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>/Users/taki/dotfiles</string>
+  <string>__HOME__/dotfiles</string>
   <key>StartInterval</key>
   <integer>3600</integer>
   <key>StandardOutPath</key>

@@ -15,7 +15,7 @@ sync-claude: sync_claude.sh
 	bash $<
 
 install-launchd: $(PLIST_NAME)
-	cp $(PLIST_NAME) $(LAUNCHD_DIR)/$(PLIST_NAME)
+	sed 's|__HOME__|$(HOME)|g' $(PLIST_NAME) > $(LAUNCHD_DIR)/$(PLIST_NAME)
 	launchctl load $(LAUNCHD_DIR)/$(PLIST_NAME)
 	@echo "Installed and loaded $(PLIST_NAME)"
 
