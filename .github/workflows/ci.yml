@@ -11,6 +11,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
 
       - name: JSON syntax check
         run: |
@@ -21,13 +23,12 @@ jobs:
 
       - name: ShellCheck
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
           find . -name '*.sh' -not -path './.git/*' | while read -r f; do
             echo "Checking $f"
             shellcheck "$f"
           done
 
       - name: Gitleaks secret scan
-        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907e6e0f170e7b # v2
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -104,7 +104,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          REVIEW_STATE=$(gh pr view ${{ github.event.pull_request.number }} --json reviews --jq '[.reviews[] | select(.author.login != "github-actions[bot]")] | last | .state // empty')
+          REVIEW_STATE=$(gh pr view ${{ github.event.pull_request.number }} --json reviews --jq '[.reviews[] | select(.author.login != "github-actions[bot]" and .author.login != "claude[bot]")] | last | .state // empty')
           if [ "$REVIEW_STATE" = "APPROVED" ]; then
+            # --auto はブランチ保護ルールの必須チェック（CI等）が全て通るまでマージを待つ
             gh pr merge ${{ github.event.pull_request.number }} --auto --squash
           fi
