@@ -1,4 +1,4 @@
-.PHONY: all help force-symlink-all sync-claude install-launchd uninstall-launchd
+.PHONY: all help force-symlink-all sync-claude restore-claude install-launchd uninstall-launchd
 
 PLIST_NAME := com.tetsuzawa.dotfiles-sync.plist
 LAUNCHD_DIR := $(HOME)/Library/LaunchAgents
@@ -12,6 +12,9 @@ force-symlink-all: force_symlink_all.sh
 	bash $<
 
 sync-claude: sync_claude.sh
+	bash $<
+
+restore-claude: restore_claude.sh
 	bash $<
 
 install-launchd: $(PLIST_NAME)
