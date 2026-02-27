@@ -1,3 +1,5 @@
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash"
 # default:cyan / root:red
 if [ $UID -eq 0 ]; then
     PS1="\[\033[31m\]\u@\h\[\033[00m\]:\[\033[01m\]\w\[\033[00m\]\\$ "
@@ -27,10 +29,6 @@ alias swagger="docker run --rm -it  --user $(id -u):$(id -g) -e GOPATH=$HOME/go:
 
 # The next line updates PATH for the Google Cloud SDK.
 #if [ -f '/Users/t-takizawa/google-cloud-sdk/path.bash.inc' ]; then . '/Users/t-takizawa/google-cloud-sdk/path.bash.inc'; fi
-/Users/t-takizawa/google-cloud-sdk/path.bash.inc
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/t-takizawa/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/t-takizawa/google-cloud-sdk/completion.bash.inc'; fi
 . "$HOME/.cargo/env"
 
 function sshzaffifzf() {
@@ -51,3 +49,15 @@ export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 eval "$(starship init bash)"
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/local/bin/google-cloud-sdk/path.bash.inc' ]; then . '/usr/local/bin/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/local/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/local/bin/google-cloud-sdk/completion.bash.inc'; fi
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/taki/.lmstudio/bin"
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash"
