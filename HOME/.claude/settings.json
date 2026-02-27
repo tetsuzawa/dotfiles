@@ -72,5 +72,6 @@
   "feedbackSurveyState": {
     "lastShownTime": 1754385656477
   },
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "_sync_test": true
 }
