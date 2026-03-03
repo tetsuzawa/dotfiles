@@ -27,7 +27,7 @@
 [user]
 	name = Tetsu Takizawa
 	email = tetsu.takizawa5@gmail.com
-	signingkey = B4A55FE34F95ABC1B12D8E43A58AB3F4102ED7CD
+	signingkey = 7FFAD06B6CC7FA45
 [merge]
 	ff = false
 [pull]

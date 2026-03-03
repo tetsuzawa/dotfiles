@@ -36,7 +36,7 @@ alias rm="rm -iv"
 alias cat=bat
 #alias jq=gojq
 #
-set PATH $PATH $HOME/.local/bin $HOME/local/bin $HOME/go/bin $HOME/.cargo/bin /usr/local/bin
+set PATH /opt/homebrew/opt/node@24/bin $PATH $HOME/.local/bin $HOME/local/bin $HOME/go/bin $HOME/.cargo/bin /usr/local/bin
 set -gx GOPATH $HOME/go
 
 # fish_git_prompt
