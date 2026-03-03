@@ -18,6 +18,7 @@ if not test -f $cache_file; or test $config_file -nt $cache_file
     # completions は ~/.config/fish/completions/ に配置（lazy load）
     gh completion -s fish > ~/.config/fish/completions/gh.fish
     uv generate-shell-completion fish > ~/.config/fish/completions/uv.fish
+    twig completion fish > ~/.config/fish/completions/twig.fish
     # direnv: vendor_conf.d で自動読み込みされるためキャッシュ不要
 end
 
