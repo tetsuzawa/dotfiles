@@ -9,6 +9,7 @@
       "WebFetch(domain:support.claude.com)"
     ]
   },
+  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -53,17 +54,17 @@
     "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "example-skills@anthropic-agent-skills": true,
     "mcp-apps@mcp-apps": false,
-    "slack@claude-plugins-official": true,
-    "Notion@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "github@claude-plugins-official": true,
     "db@cloudbase": true,
     "archaeologist@cloudbase": true,
     "datadog@cloudbase": true,
     "cloudbase-kb@cloudbase": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
   },
   "skipDangerousModePermissionPrompt": true,
   "additionalDirectories": [
@@ -71,6 +72,5 @@
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754385656477
-  },
-  "effortLevel": "medium"
+  }
 }
