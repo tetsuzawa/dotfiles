@@ -1,14 +1,45 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "awsAuthRefresh": "aws sso login --profile taki-sandbox",
   "env": {
     "MAX_THINKING_TOKENS": "31999",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "EDITOR": "code --wait",
+    "AWS_PROFILE": "taki-sandbox"
   },
   "permissions": {
     "allow": [
-      "WebFetch(domain:support.claude.com)"
-    ]
+      "WebFetch(domain:support.claude.com)",
+      "mcp__claude_ai_Slack__slack_search_channels",
+      "mcp__claude_ai_Slack__slack_search_public_and_private",
+      "mcp__claude_ai_Slack__slack_search_public",
+      "WebSearch",
+      "WebFetch(domain:docs.google.com)",
+      "WebFetch(domain:entire.io)",
+      "WebFetch(domain:www.firecrawl.dev)",
+      "WebFetch(domain:dev.to)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:platform.openai.com)",
+      "WebFetch(domain:ai.google.dev)",
+      "mcp__claude_ai_Notion__notion-get-users",
+      "WebFetch(domain:mikhail.io)",
+      "mcp__claude_ai_Notion__notion-search",
+      "mcp__claude_ai_Notion__notion-fetch",
+      "mcp__claude_ai_Notion__notion-get-teams",
+      "mcp__claude_ai_Notion__notion-create-database",
+      "mcp__claude_ai_Notion__notion-create-view",
+      "mcp__claude_ai_Notion__notion-update-data-source",
+      "mcp__claude_ai_Notion__notion-create-pages",
+      "mcp__claude_ai_Slack__slack_search_users",
+      "mcp__claude_ai_Slack__slack_read_channel",
+      "Skill(aws-remediate-docgen)"
+    ],
+    "deny": [
+      "Read(./.entire/metadata/**)"
+    ],
+    "defaultMode": "default"
   },
+  "model": "global.anthropic.claude-opus-4-6-v1[1m]",
   "hooks": {
     "Notification": [
       {
@@ -53,24 +84,38 @@
     "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "example-skills@anthropic-agent-skills": true,
     "mcp-apps@mcp-apps": false,
-    "slack@claude-plugins-official": true,
-    "Notion@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "github@claude-plugins-official": true,
     "db@cloudbase": true,
     "archaeologist@cloudbase": true,
     "datadog@cloudbase": true,
     "cloudbase-kb@cloudbase": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "scan-data@cloudbase": true,
+    "aws-remediate-docgen@cloudbase": true,
+    "superpowers@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
   },
+  "extraKnownMarketplaces": {
+    "cloudbase": {
+      "source": {
+        "source": "github",
+        "repo": "Levetty/claude-code"
+      }
+    }
+  },
+  "language": "日本語",
+  "voiceEnabled": true,
   "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
   "additionalDirectories": [
     "/Users/taki/repo/ws/nippo"
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754385656477
-  },
-  "effortLevel": "medium"
+  }
 }
