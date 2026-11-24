@@ -1,18 +1,10 @@
-## Git Conventions
+# 個人のユーザールール
 
-- コミットメッセージは日本語で書いて. eg. add: <日本語のコミットメッセージ>, feat: xxx
-- `git add -A` や `git add .` は禁止。必ず `git status` や `git diff` でaddすべきファイルを確認し、個別にファイルを指定すること
+共通ルールの正本は `/Users/taki/.agent-rules/` にある。
 
-## コーディング原則
+@/Users/taki/.agent-rules/common.md
+@/Users/taki/.agent-rules/memory.md
 
-- 宣言的・関数型プログラミングを意識すること
-- 高凝集・疎結合な実装を意識すること
-- コード上のコメントは why / why not を示すものに限定し、コードを読めば分かる情報はコメントに残さない（t-wada の主張に準拠）
+## 条件付きルール
 
-## Agent Team 運用ルール
-
-- 何かを検討するときは必ず Agent Team を作って検討すること
-- Agent Team を構成する際は、必ず**批判的視点を持つメンバー**（レビュアー、デビルズアドボケート等）を1名以上含めること
-  - 批判的視点メンバーの役割: 提案された設計・実装に対して潜在的なリスク、エッジケース、見落としを指摘し、品質を担保する
-- 何かを検討するときは Team に必ず**外部事例を調査するメンバー**を1名以上含めること
-  - 外部事例調査メンバーの役割: 類似の課題に対する業界のベストプラクティス、OSS の実装例、技術ブログ等を調査し、検討に外部知見を取り込む
+cloudbase-nukenin（worktree を含む）または CloudbaseAI の端末センサー（endpoint、nukenin）の作業では、作業の最初に `/Users/taki/.agent-rules/nukenin-workdocs.md` をツールで読み、従うこと。それ以外の作業では読まない。
